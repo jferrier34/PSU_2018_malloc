@@ -9,6 +9,7 @@
 #define _MALLOC_H_
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 #define FREE 0
 #define FULL 1
@@ -31,5 +32,22 @@ void my_putnbr(int nb);
 */
 void *malloc(size_t size);
 bool add_page(int size, void *mem);
+
+
+/*
+** free.c
+*/
+void *free_my_ptr(void *ptr);
+void add_ptr(void *mem);
+void add_block(void);
+void move_break(void *mem);
+void free(void *ptr);
+
+/*
+** intern_functions.c
+*/
+
+void *start(void *new, bool mode);
+int get_end(void);
 
 # endif /* malloc.h */

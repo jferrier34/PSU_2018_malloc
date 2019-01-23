@@ -7,9 +7,10 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/time.h>
 #include <sys/resource.h>
-#include "include/malloc.h"
+#include "./malloc.h"
 
 bool add_page(int size, void *mem)
 {
@@ -38,8 +39,8 @@ void *malloc(size_t size)
 
 	my_start = start(NULL, false);
 	if (my_start == NULL || get_end() == 0) {
-//		affect the var my_start to a new chunck
-		start(my_start, true);
+	    //affect the var my_start to a new chunck
+	start(my_start, true);
 	}
 	if (my_start == NULL)
 		return (NULL);
