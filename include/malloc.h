@@ -20,6 +20,12 @@
 #define HEADER 12
 #define PAGE 4096
 
+typedef struct malloc_s {
+    struct malloc_s *data;
+    int size;
+    bool isfree;
+} malloc_t;
+
 /*
 ** lib.c
 */
