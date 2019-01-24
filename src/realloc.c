@@ -2,12 +2,12 @@
 ** EPITECH PROJECT, 2019
 ** PSU_2018_malloc
 ** File description:
-** malloc
+** realloc
 */
 
-#include "malloc.h"
+#include "realloc.h"
 
-void *malloc(size_t size)
+void *realloc(void *ptr, size_t size)
 {
 
 }

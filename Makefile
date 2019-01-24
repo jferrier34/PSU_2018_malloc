@@ -14,8 +14,6 @@ SRC		=	$(SRC_DIR)/malloc.c	\
 
 CFLAGS		=	-W -Wall -I./include
 
-LIB		=	-L./lib/my -lmy
-
 NAME		=	malloc
 
 OBJ		=	$(SRC:.c=.o)
@@ -23,15 +21,12 @@ OBJ		=	$(SRC:.c=.o)
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
-		make -C $(SRC_LIB)
-		gcc -o $(NAME) $(SRC) $(LIB) $(CFLAGS)
+		gcc -o $(NAME) $(SRC) $(CFLAGS)
 
 debug:		$(OBJ)
-		make -C $(SRC_LIB)
-		gcc -o $(NAME) $(SRC) $(LIB) $(CFLAGS) -g3
+		gcc -o $(NAME) $(SRC) $(CFLAGS) -g3
 
 clean:
-		make clean -C $(SRC_LIB)
 		rm -f $(OBJ)
 		rm -f $(SRC_DIR)/*~
 
