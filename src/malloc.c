@@ -5,22 +5,20 @@
 ** malloc
 */
 
-#include "../include/malloc.h"
-
+#include "malloc.h"
 
 void *check_first(size_t my_nbr)
 {
-    malloc_t *check_first = Malloc;
-
-    for (int i = 0; check_first; check_first = check_first->next)
-        if (check_first->size >= my_nbr && check_first->isFree == 0)
-            return (check_first);
+    for (malloc_t *first = Mlc; first; first = first->next) {
+        if (first->size >= my_nbr && first->isFree)
+            return (first);
+    }
     return (NULL);
 }
 
 size_t getPower(size_t size)
 {
-    size_t tmp = 2;
+    size_t tmp = 1;
     while (size > tmp)
         tmp = tmp * 2;
     return (tmp);
@@ -28,7 +26,7 @@ size_t getPower(size_t size)
 
 void *isNotEmpty(struct malloc_s *tmp)
 {
-    tmp->isFree = 1;
+    tmp->isFree = false;
     return (tmp + sizeof(malloc_t));
 }
 
@@ -41,12 +39,12 @@ void *mallocable(size_t block)
     elem = sbrk(block + sizeof(malloc_t));
     to_return = elem;
     elem->next = NULL;
-    elem->isFree = 1;
+    elem->isFree = false;
     elem->size = block;
-    if (Malloc == NULL)
-        Malloc = elem;
+    if (Mlc == NULL)
+        Mlc = elem;
     else {
-        tmp = Malloc;
+        tmp = Mlc;
         while (tmp->next != NULL)
             tmp = tmp->next;
         tmp->next = elem;

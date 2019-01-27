@@ -1,13 +1,11 @@
 ##
-## EPITECH PROJECT, 2018
-## Makefile
+## EPITECH PROJECT, 2019
+## PSU_2018_malloc
 ## File description:
 ## Makefile
 ##
 
 SRC_DIR		=	$(realpath ./src)
-
-SRC_LIB		=	$(realpath ./lib/my)
 
 SRC		=	$(SRC_DIR)/malloc.c	\
 			$(SRC_DIR)/free.c	\
@@ -32,7 +30,6 @@ clean:
 		rm -f $(SRC_DIR)/*~
 
 fclean:		clean
-		make fclean -C $(SRC_LIB)
 		rm -f $(NAME)
 
 re:		fclean all

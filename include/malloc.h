@@ -11,24 +11,23 @@
     #include <stdbool.h>
     #include <stdlib.h>
     #include <stdio.h>
+    #include <unistd.h>
 
-    //#define PAGE 4096
-
-/*
-**  structure of malloc
-*/
+    /*
+    **  structure of malloc
+    */
     typedef struct malloc_s {
         struct malloc_s *next;
         //void *data;
         size_t size;
-        int isFree;
+        bool isFree;
     } malloc_t;
 
-    malloc_t *Malloc;
+    extern malloc_t *Mlc;
 
-/*
-**  malloc.c
-*/
+    /*
+    **  malloc.c
+    */
     void *check_first(size_t my_nbr);
     void *malloc(size_t size);
 

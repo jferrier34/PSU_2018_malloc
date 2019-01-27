@@ -1,17 +1,16 @@
 /*
-** EPITECH PROJECT, 2018
-** malloc
+** EPITECH PROJECT, 2019
+** PSU_2018_malloc
 ** File description:
-** malloc
+** free
 */
 
-#include "../include/free.h"
+#include "free.h"
 
 void free(void *ptr)
 {
     if (ptr == NULL)
         return;
-    ptr = ptr - sizeof(malloc_t);
-    ((malloc_t*)ptr)->isFree = 0;
+    ptr -= sizeof(malloc_t);
+    ((malloc_t*)ptr)->isFree = true;
 }
-
