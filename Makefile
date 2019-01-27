@@ -9,21 +9,23 @@ SRC_DIR		=	$(realpath ./src)
 
 SRC		=	$(SRC_DIR)/malloc.c	\
 			$(SRC_DIR)/free.c	\
-			$(SRC_DIR)/realloc.c	
+			$(SRC_DIR)/realloc.c
 
 CFLAGS		=	-W -Wall -I./include
+LDFLAGS 	= -shared -lpthread -fPIC -ggdb3
 
-NAME		=	malloc
+
+NAME		=	libmy_malloc.so
 
 OBJ		=	$(SRC:.c=.o)
 
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
-		gcc -o $(NAME) $(SRC) $(CFLAGS)
+		gcc -o $(NAME) $(SRC) -I./include $(LDFLAGS)
 
 debug:		$(OBJ)
-		gcc -o $(NAME) $(SRC) $(CFLAGS) -g3
+		gcc -o $(NAME) $(SRC) -I./include $(LDFLAGS) -g3
 
 clean:
 		rm -f $(OBJ)
