@@ -7,6 +7,8 @@
 
 #include "malloc.h"
 
+malloc_t *Mlc = NULL;
+
 void *check_first(size_t my_nbr)
 {
     for (malloc_t *first = Mlc; first; first = first->next) {
