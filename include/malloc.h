@@ -6,20 +6,30 @@
 */
 
 #ifndef _MALLOC_H_
-    #define _MALLOC_H_
+#define _MALLOC_H_
 
     #include <stdbool.h>
     #include <stdlib.h>
+    #include <stdio.h>
 
-    #define PAGE 4096
+    //#define PAGE 4096
 
+/*
+**  structure of malloc
+*/
     typedef struct malloc_s {
         struct malloc_s *next;
-        void *data;
+        //void *data;
         size_t size;
-        bool isfree;
+        int isFree;
     } malloc_t;
 
+    malloc_t *Malloc;
+
+/*
+**  malloc.c
+*/
+    void *check_first(size_t my_nbr);
     void *malloc(size_t size);
 
 #endif /* malloc.h */

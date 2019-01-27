@@ -10,7 +10,8 @@ SRC_DIR		=	$(realpath ./src)
 SRC_LIB		=	$(realpath ./lib/my)
 
 SRC		=	$(SRC_DIR)/malloc.c	\
-			$(SRC_DIR)/free.c
+			$(SRC_DIR)/free.c	\
+			$(SRC_DIR)/realloc.c	
 
 CFLAGS		=	-W -Wall -I./include
 
