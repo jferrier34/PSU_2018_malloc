@@ -18,12 +18,17 @@
     */
     typedef struct malloc_s {
         struct malloc_s *next;
-        //void *data;
         size_t size;
         bool isFree;
     } malloc_t;
 
-    extern malloc_t *Mlc;
+    typedef struct pages_s {
+        struct pages_s *next;
+        malloc_t *start;
+        size_t sizeleft;
+    } page_t;
+
+    extern page_t *Mlc;
 
     /*
     **  malloc.c
