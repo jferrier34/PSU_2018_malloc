@@ -7,13 +7,12 @@
 
 SRC_DIR		=	$(realpath ./src)
 
-SRC		=	$(SRC_DIR)/malloc.c	\
+SRC		=	$(SRC_DIR)/new_malloc.c	\
 			$(SRC_DIR)/free.c	\
 			$(SRC_DIR)/realloc.c
 
 CFLAGS		=	-W -Wall -I./include
-LDFLAGS 	= -shared -lpthread -fPIC -ggdb3
-
+LDFLAGS 	= -lpthread -fPIC -ggdb3 -shared
 
 NAME		=	libmy_malloc.so
 

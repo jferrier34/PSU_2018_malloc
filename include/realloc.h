@@ -6,12 +6,12 @@
 */
 
 #ifndef _REALLOC_H_
-#define _REALLOC_H_
-#include <stdlib.h>
+    #define _REALLOC_H_
+    #include "malloc.h"
 
-/*
-**  realloc.c
-*/
+    /*
+    **  realloc.c
+    */
     void *realloc(void *ptr, size_t size);
 
 #endif /* !REALLOC_H_ */
