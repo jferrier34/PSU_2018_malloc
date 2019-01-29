@@ -7,12 +7,21 @@
 
 #include "realloc.h"
 
-#include <stdio.h>
-
 void *realloc(void *ptr, size_t size)
 {
-    pthread_mutex_lock(&malloc_mutex);
-    pthread_mutex_unlock(&malloc_mutex);
-    printf("La il use realloc\n");
-    return (malloc(size));
+    void *new_malloc;
+    size_t tmp = 0;
+
+    if (ptr == NULL)
+        return (new_malloc);
+
+    if (new_malloc = malloc(size) == NULL)
+        return (NULL);
+
+    while (size > tmp) {
+        ((char *)new_malloc)[tmp] = ((char *)ptr)[tmp];
+        tmp++;
+    }
+    free(ptr);
+    return (new_malloc);
 }
