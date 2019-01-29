@@ -7,7 +7,11 @@
 
 #ifndef _REALLOC_H_
     #define _REALLOC_H_
+
     #include "malloc.h"
+    #include "free.h"
+    //#include <string.h>
+    #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 
     /*
     **  realloc.c

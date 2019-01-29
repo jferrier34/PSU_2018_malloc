@@ -9,11 +9,11 @@
     #define _MALLOC_H_
 
     #include <stdbool.h>
-    #include <stdlib.h>
-    #include <stdio.h>
     #include <unistd.h>
     #include <pthread.h>
+
     #pragma pack(push, 1)
+
     /*
     **  structure of malloc
     */
@@ -25,7 +25,6 @@
 
     typedef struct pages_s {
         struct pages_s *next;
-        malloc_t *start;
         size_t sizeleft;
     } page_t;
 
@@ -33,9 +32,16 @@
     extern page_t *Mlc;
 
     /*
+    **  nodes.c
+    */
+    malloc_t *check_first_node(malloc_t *first, size_t size);
+    void *get_first_node(size_t size);
+    void create_node(malloc_t *new_node, size_t size);
+    void *add_node(page_t *page, size_t size);
+
+    /*
     **  malloc.c
     */
-    void *check_first(size_t my_nbr);
     void *malloc(size_t size);
 
 #endif /* malloc.h */

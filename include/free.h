@@ -6,13 +6,13 @@
 */
 
 #ifndef _FREE_H_
-#define _FREE_H_
+    #define _FREE_H_
 
-#include "malloc.h"
+    #include "malloc.h"
 
-/*
-**  free.c
-*/
+    /*
+    **  free.c
+    */
     void free(void *ptr);
 
 #endif /* !FREE_H_ */

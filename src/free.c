@@ -9,12 +9,12 @@
 
 void free(void *ptr)
 {
-    pthread_mutex_lock(&malloc_mutex);
+    //pthread_mutex_lock(&malloc_mutex);
     if (ptr == NULL) {
-        pthread_mutex_unlock(&malloc_mutex);
+        //pthread_mutex_unlock(&malloc_mutex);
         return;
     }
     ptr -= sizeof(malloc_t);
     ((malloc_t*)ptr)->isFree = true;
-    pthread_mutex_unlock(&malloc_mutex);
+    //pthread_mutex_unlock(&malloc_mutex);
 }
