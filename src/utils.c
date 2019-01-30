@@ -6,16 +6,15 @@
 */
 
 #include "malloc.h"
+#include <stdio.h>
 
 void show_alloc_mem()
 {
-    page_t *tmp;
-
-    tmp = Mlc;
-    printf("break : 0x%lX\n", (size_t)sbrk(0));
-    while (tmp)
-    {
-        printf("0x%lX - 0x%lX : %lu bytes\n", tmp, tmp + tmp->size + sizeof(tmp), tmp->size + sizeof(tmp));
-        tmp = tmp->next;
+    printf("break : %ld\n", (long)sbrk(0));
+    for (page_t *tmp = Mlc; tmp; tmp = tmp->next) {
+        printf("Page, taille : %ld\n", tmp->sizeleft);
+        for (malloc_t *temp = (malloc_t*)(tmp + 1); temp; temp = temp->next) {
+            printf("\t%zu - %zu : %lu bytes\n", temp, ((char*)(temp + 1) + temp->size), temp->size + sizeof(malloc_t));
+        }
     }
 }

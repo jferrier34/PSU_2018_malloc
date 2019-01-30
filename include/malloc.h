@@ -38,7 +38,7 @@
     void *get_first_node(size_t size);
     void create_node(malloc_t *new_node, size_t size);
     void *add_node(page_t *page, size_t size);
-
+    void show_alloc_mem();
     /*
     **  malloc.c
     */

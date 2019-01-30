@@ -8,14 +8,14 @@
 #include "malloc.h"
 
 page_t *Mlc = NULL;
-pthread_mutex_t malloc_mutex = PTHREAD_MUTEX_INITIALIZER;
+//pthread_mutex_t malloc_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void *get_first_page(size_t size)
 {
     if (Mlc == NULL)
         return (NULL);
     for (page_t *page_temp = Mlc; page_temp; page_temp = page_temp->next) {
-        if (page_temp->sizeleft >= size)
+        if (page_temp->sizeleft >= (size + sizeof(malloc_t)))
             return (page_temp);
     }
     return (NULL);
@@ -23,7 +23,7 @@ void *get_first_page(size_t size)
 
 size_t get_power(size_t size)
 {
-    int tmp = getpagesize();
+    int tmp = getpagesize() * 4;
 
     while ((int)size > tmp)
         tmp *= 2;
@@ -32,12 +32,14 @@ size_t get_power(size_t size)
 
 void add_page(size_t size)
 {
-    size_t new_size = get_power(size) + sizeof(malloc_t);
-    page_t *page = sbrk(new_size + sizeof(page_t));
+    size_t new_size = get_power(size + sizeof(page_t) + sizeof(malloc_t));
+    page_t *page = sbrk(new_size);
     page_t *tmp;
+    malloc_t *temp = (malloc_t*)(page + 1);
 
+    create_node(temp, size);
     page->next = NULL;
-    page->sizeleft = new_size;
+    page->sizeleft = new_size - sizeof(page_t) - sizeof(malloc_t);
     if (Mlc == NULL)
         Mlc = page;
     else {
@@ -52,10 +54,10 @@ void *malloc(size_t size)
     malloc_t *first_node;
     void *tmp;
 
-    write(1, 'l', 1);
     //pthread_mutex_lock(&malloc_mutex);
-    if (Mlc == NULL)
+    if (Mlc == NULL) {
         add_page(size);
+    }
     first_page = get_first_page(size);
     if (first_page) {
         tmp = add_node(first_page, size);
