@@ -10,7 +10,7 @@
 
     #include "malloc.h"
     #include "free.h"
-    //#include <string.h>
+    #include <string.h>
     #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 
     /*

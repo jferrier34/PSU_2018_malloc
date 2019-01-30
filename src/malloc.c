@@ -8,7 +8,7 @@
 #include "malloc.h"
 
 page_t *Mlc = NULL;
-//pthread_mutex_t malloc_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t malloc_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void *get_first_page(size_t size)
 {
@@ -23,7 +23,7 @@ void *get_first_page(size_t size)
 
 size_t get_power(size_t size)
 {
-    int tmp = getpagesize() * 4;
+    int tmp = getpagesize() * 32;
 
     while ((int)size > tmp)
         tmp *= 2;
@@ -54,21 +54,21 @@ void *malloc(size_t size)
     malloc_t *first_node;
     void *tmp;
 
-    //pthread_mutex_lock(&malloc_mutex);
-    if (Mlc == NULL) {
+    pthread_mutex_lock(&malloc_mutex);
+    if (Mlc == NULL)
         add_page(size);
-    }
     first_page = get_first_page(size);
     if (first_page) {
         tmp = add_node(first_page, size);
-        //pthread_mutex_unlock(&malloc_mutex);
+        pthread_mutex_unlock(&malloc_mutex);
         return (tmp);
     }
     first_node = get_first_node(size);
     if (first_node) {
-        //pthread_mutex_unlock(&malloc_mutex);
+        pthread_mutex_unlock(&malloc_mutex);
         return (first_node);
     }
     add_page(size);
+    pthread_mutex_unlock(&malloc_mutex);
     return (malloc(size));
 }
