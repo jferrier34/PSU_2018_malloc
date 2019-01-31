@@ -23,8 +23,10 @@ void *realloc(void *ptr, size_t size)
     }
     pthread_mutex_lock(&realloc_mutex);
     new_malloc = malloc(size);
-    if (new_malloc == NULL)
+    if (new_malloc == NULL) {
+        pthread_mutex_unlock(&realloc_mutex);
         return (NULL);
+    }
     old_malloc = ptr - sizeof(malloc_t);
     new_malloc = memcpy(new_malloc, ptr, MIN(size, old_malloc->size));
     free(ptr);

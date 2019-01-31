@@ -38,6 +38,7 @@ void create_node(malloc_t *new_node, size_t size)
     new_node->next = NULL;
     new_node->isFree = true;
     new_node->size = size;
+    new_node->magic = 1337;
 }
 
 void *add_node(page_t *page, size_t size)

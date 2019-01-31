@@ -11,6 +11,7 @@
     #include <stdbool.h>
     #include <unistd.h>
     #include <pthread.h>
+    #include <string.h>
 
     #pragma pack(push, 1)
 
@@ -21,6 +22,7 @@
         struct malloc_s *next;
         size_t size;
         bool isFree;
+        int magic;
     } malloc_t;
 
     typedef struct pages_s {
@@ -38,10 +40,14 @@
     void *get_first_node(size_t size);
     void create_node(malloc_t *new_node, size_t size);
     void *add_node(page_t *page, size_t size);
+    void add_page(size_t size);
     void show_alloc_mem();
+
     /*
     **  malloc.c
     */
     void *malloc(size_t size);
+    void *calloc(size_t nmemb, size_t size);
+    bool check_args(size_t size);
 
 #endif /* malloc.h */

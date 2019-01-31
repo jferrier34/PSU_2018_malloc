@@ -9,8 +9,9 @@
 
 page_t *Mlc = NULL;
 pthread_mutex_t malloc_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t calloc_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-void *get_first_page(size_t size)
+static void *get_first_page(size_t size)
 {
     if (Mlc == NULL)
         return (NULL);
@@ -21,12 +22,12 @@ void *get_first_page(size_t size)
     return (NULL);
 }
 
-size_t get_power(size_t size)
+static size_t get_power(size_t size)
 {
     int tmp = getpagesize() * 32;
 
     while ((int)size > tmp)
-        tmp *= 2;
+        tmp += getpagesize();
     return ((size_t)tmp);
 }
 
@@ -48,6 +49,21 @@ void add_page(size_t size)
     }
 }
 
+void *calloc(size_t nmemb, size_t size)
+{
+    void *st_temp;
+
+    if (nmemb == 0 || size == 0)
+        return (NULL);
+    st_temp = malloc(nmemb * size);
+    if (st_temp == NULL)
+        return (NULL);
+    pthread_mutex_lock(&calloc_mutex);
+    st_temp = memset(st_temp, 0, nmemb * size);
+    pthread_mutex_unlock(&calloc_mutex);
+    return (st_temp);
+}
+
 void *malloc(size_t size)
 {
     page_t *first_page;
@@ -55,8 +71,8 @@ void *malloc(size_t size)
     void *tmp;
 
     pthread_mutex_lock(&malloc_mutex);
-    if (Mlc == NULL)
-        add_page(size);
+    if (!check_args(size))
+        return (NULL);
     first_page = get_first_page(size);
     if (first_page) {
         tmp = add_node(first_page, size);
