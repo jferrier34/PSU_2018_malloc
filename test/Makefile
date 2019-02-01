@@ -5,44 +5,45 @@
 ## units tests
 ##
 
-NAME	=	unit_tests
+SRC=		./src/args.c		\
+			./src/free.c		\
+			./src/malloc.		\
+			./src.nodes.c		\
+			./src.realloc.c		\
+			./utils.c
 
-CC		=	gcc
+REQUIRF	=	./src/args.c		\
+			./src/free.c		\
+			./src/malloc.		\
+			./src.nodes.c		\
+			./src.realloc.c		\
+			./utils.c
 
-SRC		=	./free.c	\
-			./malloc.c 	\
-			./realloc.c
+UNITFLAGS	=	-lcriterion -lgov	--coverage
 
-OBJ		=	$(SRC:.c=.o)
+REQTU	=	./test/tests_criterion_malloc.c
 
-CFLAGS	+=	-W	-Wall -Wextra -Wpedantic -Werror
-CFLAGS	+=	-std=gnull -I./tests/include
+OBJ=			$(SRC:.c=.o)
 
-NAME_UT	=	unit_tests
+CFLAGS=		-W -Wall -Wextra -pedantic -g3
 
-SRC_UT	=	./test/test_criterion_malloc.c
+NAME=		malloc
 
-LDFLAGS_UT	=	-lcriterion  -lgov --coverage
+all:		$(NAME)
 
-RM	=	rm -f
-
-all:	$(NAME)
-
-$(NAME):	$(OBJS)
-		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
-		
-tests_run:
-	$(CC) -o $(NAME_UT) $(SRC) $(SRC_UT) $(CFLAGS) $(LDFLAGS_UT)
-	./$(NAME_UT) -j0 --always-succeed
-
+$(NAME):	$(OBJ)
+			gcc -o $(NAME) $(OBJ) $(LFLAGS) $(CFLAGS)
 
 clean:
-	$(RM) $(OBJ) $(SRC_UT:.c=.o) $(SRC_UT:.c=.gcda) $(SRC_UT:.c=.gcno)
-	$(RM) *~ \#*\# vgcore.* .gdb_history peda-session-* *.g*
+						rm -f $(OBJ) *~ \#*\# *.gc*
 
-fclean:	clean
-		$(RM) $(NAME) a.out *.o *.a *.session
+show_coverage:
+							gcc -o units $(UNITFLAGS) $(CFLAGS) $(REQTU) $(REQUIRF)
+							./units
+							gcov *.gcda
 
-re:		fclean all
+fclean:			clean
+				rm -f $(NAME) units
 
-.PHONY:	all clean fclean re tests run
+re:				fclean all
+				
