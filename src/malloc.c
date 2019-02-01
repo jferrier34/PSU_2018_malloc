@@ -71,20 +71,22 @@ void *malloc(size_t size)
     void *tmp;
 
     pthread_mutex_lock(&malloc_mutex);
-    if (!check_args(size))
+    if (!check_args(size)) {
+        pthread_mutex_unlock(&malloc_mutex);
         return (NULL);
-    first_page = get_first_page(size);
-    if (first_page) {
-        tmp = add_node(first_page, size);
-        pthread_mutex_unlock(&malloc_mutex);
-        return (tmp);
     }
-    first_node = get_first_node(size);
-    if (first_node) {
-        pthread_mutex_unlock(&malloc_mutex);
-        return (first_node);
+    while (true) {
+        first_page = get_first_page(size);
+        if (first_page) {
+            tmp = add_node(first_page, size);
+            pthread_mutex_unlock(&malloc_mutex);
+            return (tmp);
+        }
+        first_node = get_first_node(size);
+        if (first_node) {
+            pthread_mutex_unlock(&malloc_mutex);
+            return (first_node);
+        }
+        add_page(size);
     }
-    add_page(size);
-    pthread_mutex_unlock(&malloc_mutex);
-    return (malloc(size));
 }

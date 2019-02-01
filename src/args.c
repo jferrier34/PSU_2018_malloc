@@ -9,7 +9,7 @@
 
 bool check_args(size_t size)
 {
-    if (size == 0)
+    if (size >= 9223372036854775807)
         return (false);
     if (Mlc == NULL)
         add_page(size);

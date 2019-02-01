@@ -19,8 +19,10 @@ void free(void *ptr)
         return;
     }
     tmp = ptr - sizeof(malloc_t);
-    if (tmp->magic != 1337)
+    if (tmp->magic != 1337) {
+        pthread_mutex_unlock(&free_mutex);
         return;
+    }
     tmp->isFree = true;
     pthread_mutex_unlock(&free_mutex);
 }
