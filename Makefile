@@ -11,8 +11,8 @@ SRC		=	$(SRC_DIR)/malloc.c		\
 			$(SRC_DIR)/nodes.c		\
 			$(SRC_DIR)/free.c		\
 			$(SRC_DIR)/realloc.c 	\
-			$(SRC_DIR)/args.c 		\
-			$(SRC_DIR)/utils.c
+			$(SRC_DIR)/args.c
+#			$(SRC_DIR)/utils.c
 
 CFLAGS		=	-W -Wall -I./include -ggdb3
 LDFLAGS 	=	-lpthread -fPIC -ggdb3 -shared
