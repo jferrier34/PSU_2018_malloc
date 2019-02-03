@@ -9,8 +9,11 @@
 
 bool check_args(size_t size)
 {
-    if (size >= 9223372036854775807)
+    pthread_mutex_lock(&malloc_mutex);
+    if (size >= 9223372036854775807) {
+        pthread_mutex_unlock(&malloc_mutex);
         return (false);
+    }
     if (Mlc == NULL)
         add_page(size);
     return (true);

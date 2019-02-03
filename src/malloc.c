@@ -70,11 +70,8 @@ void *malloc(size_t size)
     malloc_t *first_node;
     void *tmp;
 
-    pthread_mutex_lock(&malloc_mutex);
-    if (!check_args(size)) {
-        pthread_mutex_unlock(&malloc_mutex);
+    if (!check_args(size))
         return (NULL);
-    }
     while (true) {
         first_page = get_first_page(size);
         if (first_page) {
